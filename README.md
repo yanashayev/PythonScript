@@ -19,7 +19,9 @@ exemple:
 *os.popen(command)*
 
 os.popen will take the command as an input and return an open file object - you can do function on this object like read(), write().. 
+
 exemple:
+
 ```
     os.popen("ls").read()
     output 'a.txt\ntest.py\n'
