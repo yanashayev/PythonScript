@@ -12,6 +12,7 @@ on *Unix* the return value is the exit status of the process
 - 0 value means that everything went fine- there were no errors
 - other values means that somthing bad happend- the command didnt run successfully 
  os.system will take the command as an input and return the value of the exit status
+
 exemple:
 ```
     os.system("ls")
