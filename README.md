@@ -104,6 +104,57 @@ example
 
 ```
 
+run command by passing string can be unsafe (see code)
+*shlex*
+*shlex.split()*
+The shlex class makes it easy to write lexical analyzers for simple syntaxes resembling that of the Unix shell. This will often be useful for writing minilanguages, (for example, in run control files for Python applications) or for parsing quoted strings.
+
+*shlex.quote()*
+Return a shell-escaped version of the string s. The returned value is a string that can safely be used as one token in a shell command line, for cases where you cannot use a list.
+
+This idiom would be unsafe:
+
+```
+filename = 'somefile; rm -rf ~'
+command = 'ls -l {}'.format(filename)
+print(command)  # executed by a shell: boom!
+ls -l somefile; rm -rf ~
+```
+
+*run command and pass input*
+suppose you run a shell code and need to pass input,the input you pass should be in bytestreem by using encode()
+
+example:
+```
+subprocess.run(["python3","text.py"], capture_output=True,input="abc\mdef".encode()) 
+#output CompletedProcess(args=['python3','text.py'],returncode=0, stdout=b'abc def', stderr=b'')
+more examples in the code
+```
+
+*run command with timeout*
+set timeout parameter
+make my command interpreter sleep for param second
+
+example:
+```
+subsubprocess.run(["sleep","3"],timeout=5)
+#output CompletedProcess(args=['sleep','3'],returncode=0)
+```
+
+*run command and throw error if fail*
+
+example:
+```
+subprocess.run(["rm", "xyz"])
+output: CompletedProcess(args=['rm', 'xyz'], returncode=1)
+//throe exaption:
+try:
+    subprocess.run(["rm", "xyz"], check=True)
+except subprocess.CalledProcessError:
+    print("failed")
+output failed
+```
+
 *Popen()* (Class)
 
 A class for flexibly executing a command in a new process
@@ -111,3 +162,4 @@ A class for flexibly executing a command in a new process
 
 
 https://www.youtube.com/watch?v=IIiKVaxHCX0
+https://gist.github.com/nikhilkumarsingh/c23fbd592b4268f225cb895afaa187fe
