@@ -75,17 +75,24 @@ cat on a file- which is a linux command that will just print the content of a fi
 just have one file as the input and for he second command i"m just doing to use  the output of that first command
 to greb that file. grep can be used to search the file for certain contents and again these are linux 
 """
-p8=subprocess.run(['ls','test.txt'],capture_output=True)
+p8=subprocess.run(['cat','test.txt'],capture_output=True)
 print(p8.stdout) #will print in bytes 
 
-p9=subprocess.run(['ls','test.txt'],capture_output=True,text=True)
+p9=subprocess.run(['cat','test.txt'],capture_output=True,text=True)
 print(p9.stdout) #will print in string
 
 #we want to use the output of this as an input: -n gives as the line number that finds a match
+#you need  to pass the p9 as the input of p10 (input=p9.input)
 
 
 p10=subprocess.run(['grep','-n','test'],capture_output=True,text=True,input=p9.stdout)
-print(p10.stdout) #line 4 find test 
+print(p10.stdout) #output: line 4 find test 
+
+#we can combine the p9 and p10 by:
+
+p11=subprocess.run('cat text.txt | grep -n test', capture_output=True,text=True,shell=True)
+print(p11.stdout)
+
 
 subprocess.run(["python3","test.py"])
 subprocess.run("ls",stdout=subprocess.PIPE)
